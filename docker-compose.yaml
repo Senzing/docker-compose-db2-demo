@@ -1,0 +1,34 @@
+version: '3'
+services:
+
+  db2:
+    image: senzing/db2express-c:latest
+    command: db2start
+    container_name: senzing-db2
+    environment:
+      LICENSE: accept
+      DB2INST1_PASSWORD: ${DB2INST1_PASSWORD:-db2inst1}
+    networks:
+      - backend
+    ports:
+      - 50000:50000
+    volumes:
+      - ${DB2_STORAGE:-/storage/docker/senzing/docker-compose-db2-demo}:/home/db2inst1/db2inst1
+
+  app:
+    image: senzing/python-db2-demo
+    container_name: senzing-app
+    environment:
+      SENZING_DATABASE_URL: "db2://db2inst1:${DB2INST1_PASSWORD:-db2inst1}@senzing-db2:50000/${DB2_DATABASE:-G2}"
+    networks:
+      - backend
+    ports:
+      - 5000:5000
+    volumes:
+      - ${SENZING_DIR:-/opt/senzing}:/opt/senzing
+    depends_on:
+      - db2
+    restart: on-failure
+
+networks:
+  backend:
