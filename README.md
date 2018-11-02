@@ -78,24 +78,27 @@ docker-compose --version
 
 ### Docker images
 
-Because an independent download is needed for the DB2 ODBC client, the
-[senzing/python-db2-base](https://github.com/Senzing/docker-python-db2-base)
-docker image must be manually built.
-Follow the build instructions at
-[github.com/Senzing/docker-python-db2-base](https://github.com/Senzing/docker-python-db2-base#build)
+1. Because an independent download is needed for the DB2 ODBC client, the
+   [senzing/python-db2-base](https://github.com/Senzing/docker-python-db2-base)
+   docker image must be manually built.
+   Follow the build instructions at
+   [github.com/Senzing/docker-python-db2-base](https://github.com/Senzing/docker-python-db2-base#build)
 
-After the [senzing/python-db2-base](https://github.com/Senzing/docker-python-db2-base)
-docker image is cached locally, the following docker images need to be installed.
+1. Verify `senzing/python-db2-base` is a local image.
 
-This is the short-cut for installing all of the Senzing docker images:
+    ```console
+    docker images
+    ```
 
-```console
-docker build --tag senzing/db2express-c    https://github.com/senzing/docker-db2express-c.git
-docker build --tag senzing/db2             https://github.com/senzing/docker-db2.git
-docker build --tag senzing/python-db2-demo https://github.com/senzing/docker-python-db2-demo.git
-docker build --tag senzing/g2loader-db2    https://github.com/senzing/docker-g2loader-db2.git
-docker build --tag senzing/g2command-db2   https://github.com/senzing/docker-g2command-db2.git
-```
+1. Build the following docker images.
+
+    ```console
+    docker build --tag senzing/db2express-c    https://github.com/senzing/docker-db2express-c.git
+    docker build --tag senzing/db2             https://github.com/senzing/docker-db2.git
+    docker build --tag senzing/python-db2-demo https://github.com/senzing/docker-python-db2-demo.git
+    docker build --tag senzing/g2loader-db2    https://github.com/senzing/docker-g2loader-db2.git
+    docker build --tag senzing/g2command-db2   https://github.com/senzing/docker-g2command-db2.git
+    ```
 
 ## Run Docker formation
 
