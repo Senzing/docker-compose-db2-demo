@@ -2,81 +2,108 @@
 
 ## Overview
 
+The following diagram shows the relationship of the docker containers in this docker composition.
+
+![Image of architecture](docs/img-architecture/architecture.png)
+
 This docker formation brings up the following docker containers:
 
-1. *senzing/db2express-c*
-1. *senzing/python-db2-demo*
+1. *[senzing/db2express-c](https://github.com/Senzing/docker-db2express-c)*
+1. *[senzing/python-db2-demo](https://github.com/Senzing/docker-python-db2-demo)*
 
 Also shown in the demonstration are commands to run the following Docker images:
 
-1. *senzing/db2* in [Add Senzing schemas](#add-senzing-schemas)
-1. *senzing/g2loader-db2* in [Add content](#add-content)
-1. *senzing/g2command-db2* in [Run G2Command.py](#run-g2commandpy)
+1. *[senzing/db2]* in [Initialize database](#initialize-database)
+1. *[senzing/g2loader](https://github.com/Senzing/docker-g2loader)* in [Run G2Loader.py](#run-g2loaderpy)
+1. *[senzing/g2command](https://github.com/Senzing/docker-g2command)* in [Run G2Command.py](#run-g2commandpy)
 
 ### Contents
 
+1. [Expectations](#expectations)
+    1. [Space](#space)
+    1. [Time](#time)
+    1. [Background knowledge](#background-knowledge)
 1. [Preparation](#preparation)
-    1. [Set environment variables](#set-environment-variables)
     1. [Clone repository](#clone-repository)
-    1. [Software](#software)
-    1. [Docker images](#docker-images)
-1. [Run Docker formation](#run-docker-formation)
     1. [Create SENZING_DIR](#create-senzing_dir)
-    1. [Set environment variables](#set-environment-variables)
+    1. [Prerequisite Software](#prerequisite-software)
+1. [Using docker-compose](#using-docker-compose)
+    1. [Build docker images](#build-docker-images)
+    1. [Configuration](#configuration)
     1. [Launch docker formation](#launch-docker-formation)
-    1. [Add Senzing schemas](#add-senzing-schemas)
-    1. [Add content](#add-content)
+    1. [Initialize database](#initialize-database)
+    1. [Run G2Loader.py](#run-g2loaderpy)
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
 
+## Expectations
+
+### Space
+
+This repository and demonstration require 6 GB free disk space.
+
+### Time
+
+Budget 2 hours to get the demonstration up-and-running, depending on CPU and network speeds.
+
+### Background knowledge
+
+This repository assumes a working knowledge of:
+
+1. [Docker](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker.md)
+1. [Docker-Compose](https://github.com/Senzing/knowledge-base/blob/master/WHATIS/docker-compose.md)
+
 ## Preparation
-
-### Set environment variables
-
-These variables may be modified, but do not need to be modified.
-The variables are used throughout the installation procedure.
-
-```console
-export GIT_ACCOUNT=senzing
-export GIT_REPOSITORY=docker-compose-db2-demo
-```
-
-Synthesize environment variables.
-
-```console
-export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
-export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
-export GIT_REPOSITORY_URL="https://github.com/${GIT_ACCOUNT}/${GIT_REPOSITORY}.git"
-```
 
 ### Clone repository
 
-Get repository.
+1. Set these environment variable values:
 
-```console
-mkdir --parents ${GIT_ACCOUNT_DIR}
-cd  ${GIT_ACCOUNT_DIR}
-git clone ${GIT_REPOSITORY_URL}
-```
+    ```console
+    export GIT_ACCOUNT=senzing
+    export GIT_REPOSITORY=docker-compose-postgresql-demo
+    ```
 
-### Software
+   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+
+1. After the repository has been cloned, be sure the following are set:
+
+    ```console
+    export GIT_ACCOUNT_DIR=~/${GIT_ACCOUNT}.git
+    export GIT_REPOSITORY_DIR="${GIT_ACCOUNT_DIR}/${GIT_REPOSITORY}"
+    ```
+
+### Create SENZING_DIR
+
+If you do not already have an `/opt/senzing` directory on your local system, visit
+[HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
+
+### Prerequisite software
 
 The following software programs need to be installed.
 
 #### docker
 
-```console
-docker --version
-docker run hello-world
-```
+1. [Install docker](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker.md)
+1. Test
+
+    ```console
+    sudo docker --version
+    sudo docker run hello-world
+    ```
 
 #### docker-compose
 
-```console
-docker-compose --version
-```
+1. [Install docker-compose](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-docker-compose.md)
+1. Test
 
-### Docker images
+    ```console
+    sudo docker-compose --version
+    ```
+
+## Using docker-compose
+
+### Build docker images
 
 1. Because an independent download is needed for the DB2 ODBC client, the
    [senzing/python-db2-base](https://github.com/Senzing/docker-python-db2-base)
@@ -84,30 +111,36 @@ docker-compose --version
    Follow the build instructions at
    [github.com/Senzing/docker-python-db2-base](https://github.com/Senzing/docker-python-db2-base#build)
 
-1. Verify `senzing/python-db2-base` is a local image.
+1. Build docker images.
 
     ```console
-    docker images
+    export BASE_IMAGE=senzing/python-db2-base
+
+    sudo docker build \
+      --tag senzing/db2express-c \
+      https://github.com/senzing/docker-db2express-c.git
+
+    sudo docker build \
+      --tag senzing/db2 \
+      https://github.com/senzing/docker-db2.git
+
+    sudo docker build \
+      --tag senzing/python-demo \
+      --build-arg BASE_IMAGE=${BASE_IMAGE} \
+      https://github.com/senzing/docker-python-demo.git
+
+    sudo docker build \
+      --tag senzing/g2loader \
+      --build-arg BASE_IMAGE=${BASE_IMAGE} \
+      https://github.com/senzing/docker-g2loader.git
+
+    sudo docker build \
+      --tag senzing/g2command \
+      --build-arg BASE_IMAGE=${BASE_IMAGE} \
+      https://github.com/senzing/docker-g2command.git
     ```
 
-1. Build the following docker images.
-
-    ```console
-    docker build --tag senzing/db2express-c    https://github.com/senzing/docker-db2express-c.git
-    docker build --tag senzing/db2             https://github.com/senzing/docker-db2.git
-    docker build --tag senzing/python-db2-demo https://github.com/senzing/docker-python-db2-demo.git
-    docker build --tag senzing/g2loader-db2    https://github.com/senzing/docker-g2loader-db2.git
-    docker build --tag senzing/g2command-db2   https://github.com/senzing/docker-g2command-db2.git
-    ```
-
-## Run Docker formation
-
-### Create SENZING_DIR
-
-If you do not already have an `/opt/senzing` directory on your local system, visit
-[HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
-
-### Set environment variables for docker
+### Configuration
 
 1. **SENZING_DIR** -
    Path on the local system where
@@ -122,9 +155,14 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 1. **DB2_STORAGE** -
    Path on local system where the database files are stored.
    Default: "/storage/docker/senzing/docker-compose-db2-demo"
-1. Example:
+
+### Launch docker formation
+
+1. Launch docker-compose formation.  Example:
 
     ```console
+    cd ${GIT_REPOSITORY_DIR}
+
     export SENZING_DIR=/opt/senzing
 
     export DB2_HOST=senzing-db2
@@ -134,23 +172,17 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     export DB2_USERNAME=db2inst1
     export DB2_PASSWORD=db2inst1
     export DB2_NETWORK=dockercomposedb2demo_backend
+
+    sudo docker-compose up
     ```
-
-### Launch docker formation
-
-```console
-cd ${GIT_REPOSITORY_DIR}
-docker-compose up
-```
 
 The database storage will be on the local system at ${db2_STORAGE}.
 The default database storage path is `/storage/docker/senzing/docker-compose-db2-demo`.
 
-### Add Senzing schemas
+### Initialize database
 
 In a separate terminal window:
 
-1. [Set environment variables for docker](#set-environment-variables-for-docker)
 1. Run `docker` command.
 
     ```console
@@ -169,6 +201,7 @@ In a separate terminal window:
     db2 catalog tcpip node G2 remote senzing-db2 server 50000
     db2 terminate
     ```
+
 1. Create database. In docker container, run
 
     ```console
@@ -194,43 +227,111 @@ In a separate terminal window:
 After the schema is loaded, the demonstration python/Flask app will be available at
 [localhost:5000](http://localhost:5000).
 
-### Add content
+### Run G2Loader.py
 
-In a separate (or reusable) terminal window:
+For more information on `senzing/g2loader` configuration and usage, see
+[senzing/docker-g2loader](https://github.com/Senzing/docker-g2loader).
 
-1. [Set environment variables for docker](#set-environment-variables-for-docker)
-1. Run `docker` command
+In a separate terminal window:
+
+1. Determine docker network. Example:
 
     ```console
-    docker run -it  \
+    sudo docker network ls
+
+    # Choose value from NAME column of docker network ls
+    export SENZING_NETWORK=nameofthe_network
+    ```
+
+1. Run `docker` command. Example:
+
+    ```console
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
+    export DATABASE_PASSWORD=postgres
+    export DATABASE_HOST=senzing-postgres
+    export DATABASE_PORT=5432
+    export DATABASE_DATABASE=G2
+
+    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
+    export SENZING_DIR=/opt/senzing
+
+    sudo docker run \
+      --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
+      --net ${SENZING_NETWORK} \
+      --rm \
+      --tty \
       --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${DB2_NETWORK} \
-      --env SENZING_DATABASE_URL="db2://${DB2_USERNAME}:${DB2_PASSWORD}@${DB2_HOST}:${DB2_PORT}/${DB2_DATABASE}" \
-      senzing/g2loader-db2 \
+      senzing/g2loader \
         --purgeFirst \
         --projectFile /opt/senzing/g2/python/demo/sample/project.csv
     ```
 
 ### Run G2Command.py
 
-In a separate (or reusable) terminal window:
+For more information on `senzing/g2command` configuration and usage, see
+[senzing/docker-g2command](https://github.com/Senzing/docker-g2command).
 
-1. [Set environment variables for docker](#set-environment-variables-for-docker)
-1. Run `docker` command
+In a separate terminal window:
+
+1. Determine docker network. Example:
 
     ```console
-    docker run -it  \
+    sudo docker network ls
+
+    # Choose value from NAME column of docker network ls
+    export SENZING_NETWORK=nameofthe_network
+    ```
+
+1. Run `docker` command. Example:
+
+    ```console
+    export DATABASE_PROTOCOL=postgresql
+    export DATABASE_USERNAME=postgres
+    export DATABASE_PASSWORD=postgres
+    export DATABASE_HOST=senzing-postgres
+    export DATABASE_PORT=5432
+    export DATABASE_DATABASE=G2
+
+    export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
+    export SENZING_DIR=/opt/senzing
+
+    sudo docker run \
+      --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
+      --interactive \
+      --net ${SENZING_NETWORK} \
+      --rm \
+      --tty \
       --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${DB2_NETWORK} \
-      --env SENZING_DATABASE_URL="db2://${DB2_USERNAME}:${DB2_PASSWORD}@${DB2_HOST}:${DB2_PORT}/${DB2_DATABASE}" \
-      senzing/g2command-db2
+      senzing/g2command
     ```
 
 ## Cleanup
 
-```console
-cd ${GIT_REPOSITORY_DIR}
-docker-compose down
+In a separate terminal window:
 
-sudo rm -rf /storage/docker/senzing/docker-compose-db2-demo
-```
+1. Run `docker-compose` command.
+
+    ```console
+    cd ${GIT_REPOSITORY_DIR}
+    sudo docker-compose down
+    ```
+
+1. Delete database storage.
+
+    ```console
+    sudo rm -rf ${DB2_STORAGE}
+    ```
+
+1. Delete SENZING_DIR.
+
+    ```console
+    sudo rm -rf ${SENZING_DIR}
+    ```
+
+1. Delete git repository.
+
+    ```console
+    sudo rm -rf ${GIT_REPOSITORY_DIR}
+    ```
