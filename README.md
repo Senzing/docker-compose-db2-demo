@@ -9,11 +9,11 @@ The following diagram shows the relationship of the docker containers in this do
 This docker formation brings up the following docker containers:
 
 1. *[senzing/db2express-c](https://github.com/Senzing/docker-db2express-c)*
-1. *[senzing/python-db2-demo](https://github.com/Senzing/docker-python-db2-demo)*
+1. *[senzing/python-demo](https://github.com/Senzing/docker-python-demo)*
 
 Also shown in the demonstration are commands to run the following Docker images:
 
-1. *[senzing/db2]* in [Initialize database](#initialize-database)
+1. *[senzing/db2](https://github.com/Senzing/docker-db2)* in [Initialize database](#initialize-database)
 1. *[senzing/g2loader](https://github.com/Senzing/docker-g2loader)* in [Run G2Loader.py](#run-g2loaderpy)
 1. *[senzing/g2command](https://github.com/Senzing/docker-g2command)* in [Run G2Command.py](#run-g2commandpy)
 
@@ -61,7 +61,7 @@ This repository assumes a working knowledge of:
 
     ```console
     export GIT_ACCOUNT=senzing
-    export GIT_REPOSITORY=docker-compose-postgresql-demo
+    export GIT_REPOSITORY=docker-compose-db2-demo
     ```
 
    Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
@@ -142,6 +142,15 @@ The following software programs need to be installed.
 
 ### Configuration
 
+1. **DB2_DATABASE** -
+   The database schema name.
+   Default: "G2"
+1. **DB2_PASSWORD** -
+   The password for the the database "db2inst1" user name.
+   Default: "root"
+1. **DB2_STORAGE** -
+   Path on local system where the database files are stored.
+   Default: "/storage/docker/senzing/docker-compose-db2-demo"
 1. **SENZING_DIR** -
    Path on the local system where
    [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
@@ -149,12 +158,6 @@ The following software programs need to be installed.
    See [Create SENZING_DIR](#create-senzing_dir).
    No default.
    Usually set to "/opt/senzing".
-1. **DB2INST1_PASSWORD** -
-   The password for the the database "db2inst1" user name.
-   Default: "root"
-1. **DB2_STORAGE** -
-   Path on local system where the database files are stored.
-   Default: "/storage/docker/senzing/docker-compose-db2-demo"
 
 ### Launch docker formation
 
@@ -163,15 +166,10 @@ The following software programs need to be installed.
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export SENZING_DIR=/opt/senzing
-
-    export DB2_HOST=senzing-db2
-    export DB2_PORT=50000
-    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-demo
     export DB2_DATABASE=G2
-    export DB2_USERNAME=db2inst1
     export DB2_PASSWORD=db2inst1
-    export DB2_NETWORK=dockercomposedb2demo_backend
+    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-demo
+    export SENZING_DIR=/opt/senzing
 
     sudo docker-compose up
     ```
@@ -183,12 +181,24 @@ The default database storage path is `/storage/docker/senzing/docker-compose-db2
 
 In a separate terminal window:
 
+1. Determine docker network. Example:
+
+    ```console
+    sudo docker network ls
+
+    # Choose value from NAME column of docker network ls
+    export SENZING_NETWORK=nameofthe_network
+    ```
+
 1. Run `docker` command.
 
     ```console
+    export DB2_PASSWORD=db2inst1
+    export SENZING_DIR=/opt/senzing    
+    
     docker run -it  \
       --volume ${SENZING_DIR}:/opt/senzing \
-      --net ${DB2_NETWORK} \
+      --net ${SENZING_NETWORK} \
       --env DB2INST1_PASSWORD=${DB2_PASSWORD} \
       --env LICENSE="accept" \
       senzing/db2
@@ -246,11 +256,11 @@ In a separate terminal window:
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgres
-    export DATABASE_PORT=5432
+    export DATABASE_PROTOCOL=db2
+    export DATABASE_USERNAME=db2inst1
+    export DATABASE_PASSWORD=db2inst1
+    export DATABASE_HOST=senzing-db2
+    export DATABASE_PORT=50000
     export DATABASE_DATABASE=G2
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
@@ -287,11 +297,11 @@ In a separate terminal window:
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=postgresql
-    export DATABASE_USERNAME=postgres
-    export DATABASE_PASSWORD=postgres
-    export DATABASE_HOST=senzing-postgres
-    export DATABASE_PORT=5432
+    export DATABASE_PROTOCOL=db2
+    export DATABASE_USERNAME=db2inst1
+    export DATABASE_PASSWORD=db2inst1
+    export DATABASE_HOST=senzing-db2
+    export DATABASE_PORT=50000
     export DATABASE_DATABASE=G2
 
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"

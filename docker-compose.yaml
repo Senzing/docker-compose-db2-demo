@@ -16,7 +16,7 @@ services:
       - ${DB2_STORAGE:-/storage/docker/senzing/docker-compose-db2-demo}:/home/db2inst1/db2inst1
 
   app:
-    image: senzing/python-db2-demo
+    image: senzing/python-demo
     container_name: senzing-app
     environment:
       SENZING_DATABASE_URL: "db2://db2inst1:${DB2INST1_PASSWORD:-db2inst1}@senzing-db2:50000/${DB2_DATABASE:-G2}"
