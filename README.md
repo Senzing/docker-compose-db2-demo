@@ -97,7 +97,6 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
     sudo docker build --tag senzing/python-demo  https://github.com/senzing/docker-python-demo.git
     sudo docker build --tag senzing/g2loader     https://github.com/senzing/docker-g2loader.git
     sudo docker build --tag senzing/g2command    https://github.com/senzing/docker-g2command.git
-    sudo docker build --tag senzing/mysql        https://github.com/senzing/docker-mysql.git
     ```
 
 ### Configuration
