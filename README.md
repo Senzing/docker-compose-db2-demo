@@ -70,7 +70,7 @@ The following software programs need to be installed:
     export GIT_REPOSITORY=docker-compose-db2-demo
     ```
 
-   Then follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md).
+1. Follow steps in [clone-repository](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/clone-repository.md) to install the Git repository.
 
 1. After the repository has been cloned, be sure the following are set:
 
@@ -88,15 +88,10 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Build docker images
 
-1. Build [senzing/senzing-base](https://github.com/Senzing/docker-senzing-base) docker image.
-
 1. Build docker images.
 
     ```console
     sudo docker build --tag senzing/db2express-c https://github.com/senzing/docker-db2express-c.git
-    sudo docker build --tag senzing/python-demo  https://github.com/senzing/docker-python-demo.git
-    sudo docker build --tag senzing/g2loader     https://github.com/senzing/docker-g2loader.git
-    sudo docker build --tag senzing/g2command    https://github.com/senzing/docker-g2command.git
     ```
 
 ### Configuration
