@@ -33,6 +33,7 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Launch docker formation](#launch-docker-formation)
     1. [Initialize database](#initialize-database)
     1. [Run G2Loader.py](#run-g2loaderpy)
+    1. [Sample python app](#sample-python-app)
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
 
@@ -143,8 +144,8 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
     **Note:** The log will show errors from `senzing-app` until the database has been initialized in the next step.
 
-The database storage will be on the local system at ${DB2_STORAGE}.
-The default database storage path is `/storage/docker/senzing/docker-compose-db2-demo`.
+    The database storage will be on the local system at ${DB2_STORAGE}.
+    The default database storage path is `/storage/docker/senzing/docker-compose-db2-demo`.
 
 ### Initialize database
 
@@ -157,9 +158,6 @@ The default database storage path is `/storage/docker/senzing/docker-compose-db2
     db2 -tf /opt/senzing/g2/data/g2core-schema-db2-create.sql
     db2 connect reset
     ```
-
-After the schema is loaded, the demonstration python/Flask app will be available at
-[localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
 
@@ -201,6 +199,11 @@ In a separate terminal window:
         --purgeFirst \
         --projectFile /opt/senzing/g2/python/demo/sample/project.csv
     ```
+
+### Sample python app
+
+1. After the schema is loaded, the demonstration python/Flask app will be available at
+   [localhost:5000](http://localhost:5000).
 
 ### Run G2Command.py
 
