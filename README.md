@@ -124,11 +124,9 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export SENZING_DIR=/opt/senzing
-
     export DB2_DATABASE=G2
-    export DB2_PASSWORD=db2inst1
     export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-demo
+    export SENZING_DIR=/opt/senzing
     ```
 
 1. Launch docker-compose formation.  Example:
@@ -138,7 +136,6 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
     sudo \
       DB2_DATABASE=${DB2_DATABASE} \
-      DB2_PASSWORD=${DB2_PASSWORD} \
       DB2_STORAGE=${DB2_STORAGE} \
       SENZING_DIR=${SENZING_DIR} \
       docker-compose up
