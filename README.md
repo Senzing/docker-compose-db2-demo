@@ -26,6 +26,7 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Prerequisite Software](#prerequisite-software)
     1. [Clone repository](#clone-repository)
     1. [Create SENZING_DIR](#create-senzing_dir)
+    1. [Db2 client](#db2-client)
 1. [Using docker-compose](#using-docker-compose)
     1. [Build docker images](#build-docker-images)
     1. [Configuration](#configuration)
@@ -84,7 +85,7 @@ The following software programs need to be installed:
 If you do not already have an `/opt/senzing` directory on your local system, visit
 [HOWTO - Create SENZING_DIR](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/create-senzing-dir.md).
 
-### Db2 Client
+### Db2 client
 
 If you do not already have the Db2 client installed into `/opt/senzing`, visit
 [HOWTO - Install Db2 Client](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-db2-client.md).
@@ -104,12 +105,12 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 - **DB2_DATABASE** -
   The database schema name.
   Default: "G2"
-- **DB2_PASSWORD** -
-  The password for the the database "db2inst1" user name.
-  Default: "root"
 - **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-db2-demo"
+- **DB2INST1_PASSWORD** -
+  The password for the "db2inst1" user name.
+  Default: "db2inst1"
 - **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
