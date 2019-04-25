@@ -115,22 +115,32 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Launch docker formation
 
+1. :pencil2: Set environment variables.  Example:
+
+    ```console
+    export SENZING_DIR=/opt/senzing
+
+    export DB2_DATABASE=G2
+    export DB2_PASSWORD=db2inst1
+    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-d
+    ```
+
 1. Launch docker-compose formation.  Example:
 
     ```console
     cd ${GIT_REPOSITORY_DIR}
 
-    export DB2_DATABASE=G2
-    export DB2_PASSWORD=db2inst1
-    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-demo
-    export SENZING_DIR=/opt/senzing
-
-    sudo docker-compose up
+    sudo \
+      DB2_DATABASE=${DB2_DATABASE} \
+      DB2_PASSWORD=${DB2_PASSWORD} \
+      DB2_STORAGE=${DB2_STORAGE} \
+      SENZING_DIR=${SENZING_DIR} \
+      docker-compose up
     ```
 
     **Note:** The log will show errors from `senzing-app` until the database has been initialized in the next step.
 
-The database storage will be on the local system at ${db2_STORAGE}.
+The database storage will be on the local system at ${DB2_STORAGE}.
 The default database storage path is `/storage/docker/senzing/docker-compose-db2-demo`.
 
 ### Initialize database
