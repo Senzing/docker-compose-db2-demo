@@ -159,6 +159,12 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
     db2 connect reset
     ```
 
+### Sample python app
+
+1. After the schema and data are loaded,
+   the demonstration python/Flask app will be available at
+   [localhost:5000](http://localhost:5000).
+
 ### Run G2Loader.py
 
 For more information on `senzing/g2loader` configuration and usage, see
@@ -204,12 +210,6 @@ In a separate terminal window:
         --purgeFirst \
         --projectFile /opt/senzing/g2/python/demo/sample/project.csv
     ```
-
-### Sample python app
-
-1. After the schema and data are loaded,
-   the demonstration python/Flask app will be available at
-   [localhost:5000](http://localhost:5000).
 
 ### Run G2Command.py
 
