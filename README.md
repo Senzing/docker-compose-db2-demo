@@ -86,7 +86,7 @@ If you do not already have an `/opt/senzing` directory on your local system, vis
 
 ### Db2 Client
 
-To install Db2 client into `/opt/senzing, visit
+If you do not already have the Db2 client installed into `/opt/senzing`, visit
 [HOWTO - Install Db2 Client](https://github.com/Senzing/knowledge-base/blob/master/HOWTO/install-db2-client.md).
 
 ## Using docker-compose
@@ -127,7 +127,7 @@ To install Db2 client into `/opt/senzing, visit
 
     export DB2_DATABASE=G2
     export DB2_PASSWORD=db2inst1
-    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-d
+    export DB2_STORAGE=/storage/docker/senzing/docker-compose-db2-demo
     ```
 
 1. Launch docker-compose formation.  Example:
