@@ -166,7 +166,7 @@ For more information on `senzing/g2loader` configuration and usage, see
 
 In a separate terminal window:
 
-1. Determine docker network. Example:
+1. :pencil2: Determine docker network. Example:
 
     ```console
     sudo docker network ls
@@ -175,18 +175,23 @@ In a separate terminal window:
     export SENZING_NETWORK=nameofthe_network
     ```
 
-1. Run `docker` command. Example:
+1. :pencil2: Set environment variables.  Example:
 
     ```console
+    export SENZING_DIR=/opt/senzing
+
     export DATABASE_PROTOCOL=db2
     export DATABASE_USERNAME=db2inst1
     export DATABASE_PASSWORD=db2inst1
     export DATABASE_HOST=senzing-db2
     export DATABASE_PORT=50000
     export DATABASE_DATABASE=G2
+    ```
 
+1. Run `docker` command. Example:
+
+    ```console
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
-    export SENZING_DIR=/opt/senzing
 
     sudo docker run \
       --env SENZING_DATABASE_URL="${SENZING_DATABASE_URL}" \
@@ -202,7 +207,8 @@ In a separate terminal window:
 
 ### Sample python app
 
-1. After the schema is loaded, the demonstration python/Flask app will be available at
+1. After the schema and data are loaded,
+   the demonstration python/Flask app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Command.py
