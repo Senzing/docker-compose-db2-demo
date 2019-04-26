@@ -149,6 +149,15 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
 ### Initialize database
 
+1. Log into `` container. Example:
+
+    ```console
+    sudo docker exec \
+      --interactive \
+      --tty \
+      senzing-db2 /bin/bash
+    ```
+
 1. Populate database. In `senzing-db2` docker container, run
 
     ```console
