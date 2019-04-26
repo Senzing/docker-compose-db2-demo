@@ -32,8 +32,8 @@ Also shown in the demonstration are commands to run the following Docker images:
     1. [Configuration](#configuration)
     1. [Launch docker formation](#launch-docker-formation)
     1. [Initialize database](#initialize-database)
-    1. [Run G2Loader.py](#run-g2loaderpy)
     1. [Sample python app](#sample-python-app)
+    1. [Run G2Loader.py](#run-g2loaderpy)
     1. [Run G2Command.py](#run-g2commandpy)
 1. [Cleanup](#cleanup)
 
@@ -195,19 +195,18 @@ In a separate terminal window:
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export SENZING_DIR=/opt/senzing
-
-    export DATABASE_PROTOCOL=db2
     export DATABASE_USERNAME=db2inst1
     export DATABASE_PASSWORD=db2inst1
-    export DATABASE_HOST=senzing-db2
-    export DATABASE_PORT=50000
     export DATABASE_DATABASE=G2
+    export SENZING_DIR=/opt/senzing
     ```
 
 1. Run `docker` command. Example:
 
     ```console
+    export DATABASE_PROTOCOL=db2
+    export DATABASE_HOST=senzing-db2
+    export DATABASE_PORT=50000
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
@@ -241,19 +240,18 @@ In a separate terminal window:
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export SENZING_DIR=/opt/senzing
-
-    export DATABASE_PROTOCOL=db2
     export DATABASE_USERNAME=db2inst1
     export DATABASE_PASSWORD=db2inst1
-    export DATABASE_HOST=senzing-db2
-    export DATABASE_PORT=50000
     export DATABASE_DATABASE=G2
+    export SENZING_DIR=/opt/senzing
     ```
 
 1. Run `docker` command. Example:
 
     ```console
+    export DATABASE_PROTOCOL=db2
+    export DATABASE_HOST=senzing-db2
+    export DATABASE_PORT=50000
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
