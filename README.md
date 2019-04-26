@@ -173,7 +173,9 @@ In a separate terminal window:
 ### Sample python app
 
 1. After the schema and data are loaded,
-   the demonstration python/Flask app will be available at
+   the demonstration
+   [python/Flask](https://github.com/Senzing/docker-python-demo)
+   app will be available at
    [localhost:5000](http://localhost:5000).
 
 ### Run G2Loader.py
@@ -195,18 +197,18 @@ In a separate terminal window:
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export DATABASE_USERNAME=db2inst1
-    export DATABASE_PASSWORD=db2inst1
     export DATABASE_DATABASE=G2
+    export DATABASE_PASSWORD=db2inst1
+    export DATABASE_USERNAME=db2inst1
     export SENZING_DIR=/opt/senzing
     ```
 
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=db2
     export DATABASE_HOST=senzing-db2
     export DATABASE_PORT=50000
+    export DATABASE_PROTOCOL=db2
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
@@ -240,18 +242,18 @@ In a separate terminal window:
 1. :pencil2: Set environment variables.  Example:
 
     ```console
-    export DATABASE_USERNAME=db2inst1
-    export DATABASE_PASSWORD=db2inst1
     export DATABASE_DATABASE=G2
+    export DATABASE_PASSWORD=db2inst1
+    export DATABASE_USERNAME=db2inst1
     export SENZING_DIR=/opt/senzing
     ```
 
 1. Run `docker` command. Example:
 
     ```console
-    export DATABASE_PROTOCOL=db2
     export DATABASE_HOST=senzing-db2
     export DATABASE_PORT=50000
+    export DATABASE_PROTOCOL=db2
     export SENZING_DATABASE_URL="${DATABASE_PROTOCOL}://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
 
     sudo docker run \
