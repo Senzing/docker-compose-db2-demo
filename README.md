@@ -149,6 +149,8 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
 ### Initialize database
 
+In a separate terminal window:
+
 1. Log into `senzing-db2` container. Example:
 
     ```console
