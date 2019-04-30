@@ -103,16 +103,16 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
 ### Configuration
 
-- **DB2_DATABASE** -
+* **DB2_DATABASE** -
   The database schema name.
   Default: "G2"
-- **DB2_STORAGE** -
+* **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-db2-demo"
-- **DB2INST1_PASSWORD** -
+* **DB2INST1_PASSWORD** -
   The password for the "db2inst1" user name.
   Default: "db2inst1"
-- **SENZING_DIR** -
+* **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
   has been extracted.
