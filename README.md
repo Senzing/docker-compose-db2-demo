@@ -1,5 +1,17 @@
 # docker-compose-db2-demo
 
+## :no_entry: Deprecated
+
+This repository was an early example of a docker-compose formation
+using Senzing with dockerized Python scripts.
+It is deprecated and will not be maintained.
+
+It has been replaced by
+[github.com/Senzing/docker-compose-demo](https://github.com/Senzing/docker-compose-demo)
+which shows docker-compose formations for multiple databases.
+
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 ## Overview
 
 The following diagram shows the relationship of the docker containers in this docker composition.
@@ -103,16 +115,16 @@ If you do not already have the Db2 client installed into `/opt/senzing`, visit
 
 ### Configuration
 
-- **DB2_DATABASE** -
+* **DB2_DATABASE** -
   The database schema name.
   Default: "G2"
-- **DB2_STORAGE** -
+* **DB2_STORAGE** -
   Path on local system where the database files are stored.
   Default: "/storage/docker/senzing/docker-compose-db2-demo"
-- **DB2INST1_PASSWORD** -
+* **DB2INST1_PASSWORD** -
   The password for the "db2inst1" user name.
   Default: "db2inst1"
-- **SENZING_DIR** -
+* **SENZING_DIR** -
   Path on the local system where
   [Senzing_API.tgz](https://s3.amazonaws.com/public-read-access/SenzingComDownloads/Senzing_API.tgz)
   has been extracted.
